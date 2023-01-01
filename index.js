@@ -1,6 +1,6 @@
 import express from "express";
 import router from "./router.js";
-import db from "./database.js";
+import main from "./database.js";
 import cors from "cors";
 
 const port = process.env.PORT ?? 5000;
@@ -17,8 +17,7 @@ app.use(router);
 //connect db
 
 try {
-  db.authenticate();
-  console.log("DB connected");
+  main();
 } catch (error) {
   console.error(error);
 }

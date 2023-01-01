@@ -1,13 +1,7 @@
-import CardsModel from "./models.js";
-import { Op } from "sequelize";
+import Cards from "../Models/CardModel.js";
+import error from "../error.js";
 
-const error = {
-  notFound: { err: "Card not found" },
-  dbGetError: { err: "Error retrieving data from database" },
-  dbPostError: { err: "Error saving cards" },
-};
-
-const controller = {
+const CardsController = {
   getCards: async (req, res) => {
     const { page, limit } = req.query;
 
@@ -26,35 +20,25 @@ const controller = {
       size = limitNumber;
     }
 
-    const cards = await CardsModel.findAndCountAll({
-      limit: size,
-      offset: pages * size,
-      attributes: ["Name", "Rarity", "Description"],
-    });
+    const cards = await Cards;
     res.status(200).send({
       results: cards.rows,
       totalPages: Math.ceil(cards.count / size),
     });
   },
   getAllCards: async (req, res) => {
-    const AllCards = await CardsModel.findAndCountAll({
-      attributes: ["Name", "Rarity", "Description"],
-    });
-    res
-      .status(200)
-      .send({
-        results: AllCards.rows,
-        totalCards: AllCards.count,
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send(error.dbGetError);
-      });
+    try {
+      const AllCards = await Cards.find({});
+      console.log(AllCards);
+      res.status(200).send(AllCards);
+    } catch (err) {
+      res.status(500).send(error.dbGetError);
+    }
   },
   searchCards: async (req, res) => {
     const { name = "", rarity = "" } = req.query;
 
-    const Cards = await CardsModel.findAndCountAll({
+    const Cards = await Cards.findAndCountAll({
       attributes: ["Name", "Rarity", "Description"],
       where: {
         Name: {
@@ -78,18 +62,11 @@ const controller = {
       });
   },
   getCardById: async (req, res) => {
-    const id = parseInt(req.params.id);
-    const OneCards = await CardsModel.findOne({
-      attributes: ["Name", "Rarity", "Description"],
-      where: {
-        ID: id,
-      },
-    });
+    const id = req.params.id;
+    const OneCards = await Cards.findById(id);
     res
       .status(200)
-      .send({
-        results: OneCards,
-      })
+      .send(OneCards)
       .catch((err) => {
         console.error(err);
         res.status(500).send(error.dbGetError);
@@ -98,7 +75,7 @@ const controller = {
   postCard: async (req, res) => {
     console.log(req.body);
     const { name = "DefaultName", rarity = "", description = "" } = req.body;
-    const newCard = await CardsModel.create(
+    const newCard = await Cards.create(
       {
         Name: name,
         Rarity: rarity,
@@ -107,12 +84,15 @@ const controller = {
       {
         isNewRecord: true,
       }
-    ).catch((err) => {
-      console.error(err);
-      res.status(500).send(error.dbPostError);
-    });
-    res.status(201).send({ data: newCard });
+    );
+    res
+      .sendStatus(201)
+      .send({ data: newCard })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send(error.dbPostError);
+      });
   },
 };
 
-export default controller;
+export default CardsController;
