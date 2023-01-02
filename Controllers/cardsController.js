@@ -20,7 +20,12 @@ const CardsController = {
       size = limitNumber;
     }
 
-    const cards = await Cards;
+    const cards = await Cards.find()
+      .limit(size)
+      .skip(size * pages)
+      .sort({
+        Name: "asc",
+      });
     res.status(200).send({
       results: cards.rows,
       totalPages: Math.ceil(cards.count / size),
@@ -38,18 +43,7 @@ const CardsController = {
   searchCards: async (req, res) => {
     const { name = "", rarity = "" } = req.query;
 
-    const Cards = await Cards.findAndCountAll({
-      attributes: ["Name", "Rarity", "Description"],
-      where: {
-        Name: {
-          [Op.like]: `${name}%`,
-        },
-        Rarity: {
-          [Op.like]: `%${rarity}%`,
-        },
-      },
-      order: [["Name", "ASC"]],
-    });
+    const Cards = await Cards.findAndCountAll({});
     res
       .status(200)
       .send({
@@ -75,16 +69,11 @@ const CardsController = {
   postCard: async (req, res) => {
     console.log(req.body);
     const { name = "DefaultName", rarity = "", description = "" } = req.body;
-    const newCard = await Cards.create(
-      {
-        Name: name,
-        Rarity: rarity,
-        Description: description,
-      },
-      {
-        isNewRecord: true,
-      }
-    );
+    const newCard = await Cards.create({
+      Name: name,
+      Rarity: rarity,
+      Description: description,
+    });
     res
       .sendStatus(201)
       .send({ data: newCard })
