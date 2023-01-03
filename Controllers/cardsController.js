@@ -3,7 +3,7 @@ import error from "../error.js";
 
 const CardsController = {
   getCards: async (req, res) => {
-    const { page, limit } = req.query;
+    const { page, limit, order } = req.query;
 
     const pageNumber = Number.parseInt(page);
     const limitNumber = Number.parseInt(limit);
@@ -24,10 +24,10 @@ const CardsController = {
       .limit(size)
       .skip(size * pages)
       .sort({
-        Name: "asc",
+        Name: order,
       });
     res.status(200).send({
-      results: cards.rows,
+      results: cards,
       totalPages: Math.ceil(cards.count / size),
     });
   },
