@@ -1,9 +1,29 @@
 import Cards from "../Models/CardModel.js";
 import error from "../error.js";
+import usersController from "./usersController.js";
+
+const getCardsPaginate = (model) => {
+  (req, res) => {
+    const { page, limit, order } = req.query;
+    const pageNumber = Number.parseInt(page);
+    const limitNumber = Number.parseInt(limit);
+
+    const startIndex = (pageNumber - 1) * limitNumber;
+    const endIndex = pageNumber * limit;
+
+    const results = {};
+
+    // if(endIndex > model.length) {
+    //   results.next = {
+    //     page: page +
+    //   }
+    // }
+  };
+};
 
 const CardsController = {
   getCards: async (req, res) => {
-    const { page, limit, order } = req.query;
+    const { page, limit, order = "asc" } = req.query;
 
     const pageNumber = Number.parseInt(page);
     const limitNumber = Number.parseInt(limit);
@@ -19,7 +39,7 @@ const CardsController = {
     if (limitNumber > 0 && !Number.isNaN(limitNumber)) {
       size = limitNumber;
     }
-
+    const allCards = await Cards.find({});
     const cards = await Cards.find()
       .limit(size)
       .skip(size * pages)
@@ -28,13 +48,12 @@ const CardsController = {
       });
     res.status(200).send({
       results: cards,
-      totalPages: Math.ceil(cards.count / size),
+      totalPages: Math.ceil(allCards.length / size),
     });
   },
   getAllCards: async (req, res) => {
     try {
       const AllCards = await Cards.find({});
-      console.log(AllCards);
       res.status(200).send(AllCards);
     } catch (err) {
       res.status(500).send(error.dbGetError);
@@ -75,7 +94,7 @@ const CardsController = {
       Description: description,
     });
     res
-      .sendStatus(201)
+      .status(201)
       .send({ data: newCard })
       .catch((err) => {
         console.error(err);

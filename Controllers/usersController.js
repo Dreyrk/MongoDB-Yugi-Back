@@ -1,41 +1,23 @@
-import UserModel from "../Models/UserModel.js";
+import Users from "../Models/UserModel.js";
 import error from "../error.js";
 
 const usersController = {
   getAllUsers: async (req, res) => {
-    const AllUsers = await UserModel.findAndCountAll({
-      attributes: ["pseudo", "email", "avatar_url"],
-    });
-    res
-      .status(200)
-      .send({
-        results: AllUsers.rows,
-        totalUsers: AllUsers.count,
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send(error.dbGetError);
-      });
+    try {
+      const AllUsers = await Users.find();
+      res.status(200).send(AllUsers);
+    } catch (err) {
+      res.status(500).send(error.dbGetError);
+    }
   },
-
-  getUserByEmailWithPasswordAndPassToNext: (req, res, next) => {
-    const { email } = req.body;
-
-    database
-      .query("select * from users where email = ?", [email])
-      .then(([users]) => {
-        if (users[0] != null) {
-          req.user = users[0];
-
-          next();
-        } else {
-          res.status(401).send("bruh");
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send("Error retrieving data from database");
-      });
+  getUserById: async (req, res) => {
+    const id = req.body.id;
+    try {
+      const OneUsers = await Users.findById({ _id: id });
+      res.status(200).send(OneUsers);
+    } catch (err) {
+      res.status(500).send(error.dbGetError);
+    }
   },
   postUser: async (req, res) => {
     const {
@@ -44,25 +26,19 @@ const usersController = {
       password = "password",
       avatar_url = "",
     } = req.body;
-    const newUser = await UserModel.create(
-      {
-        pseudo: pseudo,
-        email: email,
-        password: password,
-        avatar_url: avatar_url,
-      },
-      {
-        isNewRecord: true,
-      }
-    );
+    const newUser = await Users.create({ pseudo, email, password, avatar_url });
     res
       .status(201)
-      .location(`/api/users/${result.insertId}`)
       .send({ data: newUser })
       .catch((err) => {
         console.error(err);
         res.status(500).send(error.dbPostError);
       });
+  },
+  deleteUser: async (req, res) => {
+    const id = req.body.id;
+    const user = await Users.deleteOne({ _id: id });
+    res.status(204).send(user);
   },
 };
 

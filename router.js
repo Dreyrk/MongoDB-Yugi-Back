@@ -1,13 +1,15 @@
 import express from "express";
 import usersController from "./Controllers/usersController.js";
 import cardsController from "./Controllers/cardsController.js";
-import auth from "./Middlewares/auth.js";
+import loginController from "./Auth/login.js";
+import auth from "./Auth/auth.js";
 
 const { getCards, getAllCards, getCardById, searchCards, postCard } =
   cardsController;
 
-const { getAllUsers, postUser, getUserByEmailWithPasswordAndPassToNext } =
-  usersController;
+const { getAllUsers, postUser, deleteUser } = usersController;
+
+const { getUserByEmailWithPasswordAndPassToNext } = loginController;
 
 const { hashPassword, verifyPassword, verifyToken } = auth;
 
@@ -39,8 +41,17 @@ router.get("/api/users/", getAllUsers);
 
 router.post("/api/users/", postUser);
 
+//DELETE
+
+router.delete("/api/users/:id", deleteUser);
+
 /*<<<-------------------------------------------Login------------------------------------------------>>>*/
 
-router.post("/login", verifyPassword, getUserByEmailWithPasswordAndPassToNext);
-
+router.post("/api/register", hashPassword, postUser);
+router.post(
+  "/api/login",
+  getUserByEmailWithPasswordAndPassToNext,
+  verifyPassword,
+  verifyToken
+);
 export default router;

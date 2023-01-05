@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import Cards from "./Models/CardModel.js";
-import yugi from "./YugiData.json" assert { type: "json" };
+import Cards from "../Models/CardModel.js";
+import yugi from "../Data/YugiData.json" assert { type: "json" };
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/test", {
