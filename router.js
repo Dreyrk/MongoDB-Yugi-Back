@@ -1,13 +1,15 @@
 import express from "express";
 import usersController from "./Controllers/usersController.js";
 import cardsController from "./Controllers/cardsController.js";
+import deckController from "./Controllers/decksController.js";
 import loginController from "./Auth/login.js";
 import auth from "./Auth/auth.js";
 
 const { getCards, getAllCards, getCardById, searchCards, postCard } =
   cardsController;
 
-const { getAllUsers, postUser, deleteUser } = usersController;
+const { getAllUsers, postUser, deleteUser, searchUser } = usersController;
+const { getDecks, postDecks } = deckController;
 
 const { getUserByEmailWithPasswordAndPassToNext } = loginController;
 
@@ -31,11 +33,20 @@ router.get("/api/search/", searchCards);
 
 router.post("/api/cards", postCard);
 
+/*<<<-------------------------------------------Decks------------------------------------------------>>>*/
+
+router.get("/api/decks", getDecks);
+
+//POST
+
+router.post("/api/decks", postDecks);
+
 /*<<<-------------------------------------------Users------------------------------------------------>>>*/
 
 //GET
 
 router.get("/api/users/", getAllUsers);
+router.get("/api/users/search", searchUser);
 
 //POST
 

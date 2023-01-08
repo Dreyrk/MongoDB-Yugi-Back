@@ -19,6 +19,21 @@ const usersController = {
       res.status(500).send(error.dbGetError);
     }
   },
+  searchUser: async (req, res) => {
+    const { pseudo, email } = req.body;
+
+    try {
+      const users = await Users.find({ email, pseudo });
+
+      if (users) {
+        res.status(200).send(users);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (err) {
+      res.status(500).send(error.dbGetError);
+    }
+  },
   postUser: async (req, res) => {
     const {
       pseudo = "DefaultPseudo",
@@ -26,10 +41,11 @@ const usersController = {
       password = "password",
       avatar_url = "",
     } = req.body;
-    const newUser = await Users.create({ pseudo, email, password, avatar_url });
+    const newUser = new Users({ pseudo, email, password, avatar_url });
+    const savedUser = await newUser.save();
     res
       .status(201)
-      .send({ data: newUser })
+      .send({ data: savedUser })
       .catch((err) => {
         console.error(err);
         res.status(500).send(error.dbPostError);

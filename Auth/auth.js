@@ -15,8 +15,9 @@ const auth = {
     argon2
       .hash(req.body.password, hashingOptions)
       .then((hashedPassword) => {
-        req.body.hashedPassword = hashedPassword;
-        delete req.body.password;
+        const user = req.user;
+        delete user.password;
+        user.hashedPassword = hashedPassword;
 
         next();
       })

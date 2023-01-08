@@ -1,25 +1,5 @@
 import Cards from "../Models/CardModel.js";
 import error from "../error.js";
-import usersController from "./usersController.js";
-
-const getCardsPaginate = (model) => {
-  (req, res) => {
-    const { page, limit, order } = req.query;
-    const pageNumber = Number.parseInt(page);
-    const limitNumber = Number.parseInt(limit);
-
-    const startIndex = (pageNumber - 1) * limitNumber;
-    const endIndex = pageNumber * limit;
-
-    const results = {};
-
-    // if(endIndex > model.length) {
-    //   results.next = {
-    //     page: page +
-    //   }
-    // }
-  };
-};
 
 const CardsController = {
   getCards: async (req, res) => {
@@ -62,44 +42,43 @@ const CardsController = {
   searchCards: async (req, res) => {
     const { name = "", rarity = "" } = req.query;
 
-    const Cards = await Cards.findAndCountAll({});
-    res
-      .status(200)
-      .send({
-        results: Cards.rows,
-        totalCards: Cards.count,
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send(error.dbGetError);
-      });
+    try {
+      const users = await Cards.find({ name, rarity });
+
+      if (users) {
+        res.status(200).send(users);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (err) {
+      res.status(500).send(error.dbGetError);
+    }
   },
   getCardById: async (req, res) => {
     const id = req.params.id;
-    const OneCards = await Cards.findById(id);
-    res
-      .status(200)
-      .send(OneCards)
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send(error.dbGetError);
-      });
+    try {
+      const OneCards = await Cards.findById(id);
+      res.status(200).send(OneCards);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send(error.dbGetError);
+    }
   },
   postCard: async (req, res) => {
-    console.log(req.body);
     const { name = "DefaultName", rarity = "", description = "" } = req.body;
-    const newCard = await Cards.create({
-      Name: name,
-      Rarity: rarity,
-      Description: description,
-    });
-    res
-      .status(201)
-      .send({ data: newCard })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send(error.dbPostError);
+
+    try {
+      const newCard = new Cards({
+        Name: name,
+        Rarity: rarity,
+        Description: description,
       });
+      const savedCard = await newCard.save();
+      res.status(201).send({ data: savedCard });
+    } catch (e) {
+      console.error(err);
+      res.status(500).send(error.dbPostError);
+    }
   },
 };
 

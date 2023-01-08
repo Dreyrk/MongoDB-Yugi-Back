@@ -5,7 +5,7 @@ const loginController = {
     const { email } = req.body;
 
     const user = await Users.find({ email })
-      .then(([users]) => {
+      .then((users) => {
         if (users[0] != null) {
           req.user = users[0];
           next();
