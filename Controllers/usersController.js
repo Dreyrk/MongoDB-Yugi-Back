@@ -1,5 +1,6 @@
 import Users from "../Models/UserModel.js";
 import error from "../error.js";
+import Decks from "../Models/DeckModel.js";
 
 const usersController = {
   getAllUsers: async (req, res) => {
@@ -50,6 +51,26 @@ const usersController = {
         console.error(err);
         res.status(500).send(error.dbPostError);
       });
+  },
+  insertDeckUser: async (req, res) => {
+    try {
+      const { user_id, deck_id } = req.body;
+
+      const user = await Users.find({ _id: user_id });
+
+      const deck = await Decks.find({
+        _id: { $in: deck_id },
+      });
+      console.log(deck);
+      console.log(user[0]);
+
+      user[0].decks.push(deck);
+
+      res.status(201).send({ data: user });
+    } catch (e) {
+      console.error(e);
+      res.status(500).send(error.dbPostError);
+    }
   },
   deleteUser: async (req, res) => {
     const id = req.body.id;

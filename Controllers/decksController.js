@@ -1,4 +1,5 @@
 import Decks from "../Models/DeckModel.js";
+import Cards from "../Models/CardModel.js";
 import error from "../error.js";
 
 const deckController = {
@@ -10,19 +11,47 @@ const deckController = {
       res.status(500).send(error.dbGetError);
     }
   },
-  postDecks: async (req, res) => {
+  createDecks: async (req, res) => {
     try {
-      const {
+      const { name, description, difficulty } = req.body;
+
+      const newDeck = Decks.create({
         name,
         difficulty,
         description,
-        cards = ["default", "default2"],
-      } = req.body;
+      });
 
-      const newDeck = await new Decks({ name, difficulty, description, cards });
+      console.log(newDeck);
+
+      res.sendStatus(201);
     } catch (e) {
+      console.error(e);
       res.status(500).send(error.dbPostError);
     }
+  },
+  insertCardsIntoDeck: async (req, res) => {
+    try {
+      const { cards_id, deck_id } = req.body;
+
+      const deck = await Decks.find({ _id: deck_id });
+
+      const cards = await Cards.find({
+        _id: { $in: cards_id },
+      });
+      console.log(cards);
+      console.log(deck[0]);
+
+      deck[0].cards.push(cards);
+
+      res.status(201).send({ data: deck });
+    } catch (e) {
+      console.error(e);
+      res.status(500).send(error.dbPostError);
+    }
+  },
+  resetAllDeck: async (req, res) => {
+    await Decks.deleteMany({});
+    res.sendStatus(204);
   },
 };
 
