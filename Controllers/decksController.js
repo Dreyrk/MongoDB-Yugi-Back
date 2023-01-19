@@ -33,21 +33,33 @@ const deckController = {
     try {
       const { cards_id, deck_id } = req.body;
 
-      const deck = await Decks.find({ _id: deck_id });
-
       const cards = await Cards.find({
         _id: { $in: cards_id },
       });
       console.log(cards);
-      console.log(deck[0]);
 
-      deck[0].cards.push(cards);
+      console.log(cards_id);
 
-      res.status(201).send({ data: deck });
+      const newDeck = await Decks.updateOne({ _id: deck_id }, { cards: cards });
+
+      res.status(201).send({ data: newDeck });
     } catch (e) {
       console.error(e);
       res.status(500).send(error.dbPostError);
     }
+  },
+  deleteCardsFromDeck: async (req, res, next) => {
+    const { cards_id, deck_id } = req.body;
+
+    if (!cards_id || !deck_id) {
+      return res.status(500).send(error.dbPostError); // Send USER error (leur faute)
+    }
+
+    try {
+      const newDeck = await Decks.deleteOne(); // where deck_id and cards_id === cards_id
+    } catch (e) {
+      // send DB Errror (ta faute)
+    } // et refait tout tes controlleur comme ça
   },
   resetAllDeck: async (req, res) => {
     await Decks.deleteMany({});
