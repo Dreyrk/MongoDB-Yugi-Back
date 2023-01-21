@@ -7,13 +7,8 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
+  .then(() => Cards.deleteMany({}))
+  .then(() => Cards.insertMany(yugi.data))
   .then(() => {
-    const cardSeed = async () => {
-      await Cards.deleteMany({});
-      await Cards.insertMany(yugi.data);
-    };
-
-    cardSeed().then(() => {
-      mongoose.connection.close();
-    });
+    mongoose.connection.close();
   });

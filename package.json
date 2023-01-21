@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "seed": "node cardSeed.js"
+    "seed": "node ./Seed/cardSeed.js"
   },
   "author": "",
   "license": "ISC",
