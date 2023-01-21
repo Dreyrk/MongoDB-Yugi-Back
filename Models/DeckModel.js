@@ -6,6 +6,7 @@ export const DeckSchema = new mongoose.Schema(
     name: String,
     difficulty: String,
     description: String,
+    img: String,
     cards: [CardSchema],
   },
   { timestamps: true }

@@ -18,8 +18,14 @@ const {
   resetUsers,
 } = usersController;
 
-const { getDecks, createDecks, insertCardsIntoDeck, resetAllDeck } =
-  deckController;
+const {
+  getDecks,
+  getDeckById,
+  createDecks,
+  insertCardsIntoDeck,
+  resetAllDeck,
+  updateDeck,
+} = deckController;
 
 const { getUserByEmailWithPasswordAndPassToNext } = loginController;
 
@@ -48,11 +54,16 @@ router.post("/api/cards", postCard);
 //GET
 
 router.get("/api/decks", getDecks);
+router.get("/api/decks/:id", getDeckById);
 
 //POST
 
 router.post("/api/decks", createDecks);
 router.post("/api/decks/insertCards", insertCardsIntoDeck);
+
+//PUT
+
+router.put("/api/decks/:id", updateDeck);
 
 //DELETE
 
