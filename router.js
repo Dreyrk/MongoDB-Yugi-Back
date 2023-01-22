@@ -2,6 +2,7 @@ import express from "express";
 import usersController from "./Controllers/usersController.js";
 import cardsController from "./Controllers/cardsController.js";
 import deckController from "./Controllers/decksController.js";
+import baseDeckController from "./Controllers/baseDecksController.js";
 import loginController from "./Auth/login.js";
 import auth from "./Auth/auth.js";
 
@@ -26,6 +27,8 @@ const {
   resetAllDeck,
   updateDeck,
 } = deckController;
+
+const { getBaseDecks, getBaseDeckById } = baseDeckController;
 
 const { getUserByEmailWithPasswordAndPassToNext } = loginController;
 
@@ -56,6 +59,9 @@ router.post("/api/cards", postCard);
 router.get("/api/decks", getDecks);
 router.get("/api/decks/:id", getDeckById);
 
+router.get("/api/decks/base", verifyToken, getBaseDecks);
+router.get("/api/decks/base/:id", verifyToken, getBaseDeckById);
+
 //POST
 
 router.post("/api/decks", createDecks);
@@ -67,7 +73,7 @@ router.put("/api/decks/:id", updateDeck);
 
 //DELETE
 
-router.delete("/api/decks/reset", resetAllDeck);
+router.delete("/api/decks/reset", verifyToken, resetAllDeck);
 
 /*<<<-------------------------------------------Users------------------------------------------------>>>*/
 
@@ -78,14 +84,13 @@ router.get("/api/users/search", searchUser);
 
 //DELETE
 
-router.delete("/api/users/:id", deleteUser);
+router.delete("/api/users/:id", verifyToken, deleteUser);
 router.delete("/api/users/reset", resetUsers);
 
 //POST
 
-router.post("/api/users/", postUser);
-router.post("/api/users/insert/decks", insertDeckUser);
-router.post("/api/users/insert/cards", insertCardFav);
+router.post("/api/users/insert/decks", verifyToken, insertDeckUser);
+router.post("/api/users/insert/cards", verifyToken, insertCardFav);
 
 /*<<<-------------------------------------------Login------------------------------------------------>>>*/
 

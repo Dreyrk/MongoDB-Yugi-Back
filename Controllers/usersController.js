@@ -56,14 +56,14 @@ const usersController = {
     }
   },
   postUser: async (req, res) => {
-    const {
-      pseudo = "DefaultPseudo",
-      email = "default@email.com",
-      password = "password",
-      avatar_url = "none",
-    } = req.body;
+    const { pseudo, email, hashedPassword = "bruh", avatar_url } = req.body;
 
-    const newUser = await Users.create({ pseudo, email, password, avatar_url });
+    const newUser = await Users.create({
+      pseudo,
+      email,
+      hashedPassword,
+      avatar_url,
+    });
 
     res
       .status(201)

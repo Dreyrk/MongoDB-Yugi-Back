@@ -4,7 +4,7 @@ const loginController = {
   getUserByEmailWithPasswordAndPassToNext: async (req, res, next) => {
     const { email } = req.body;
 
-    const user = await Users.find({ email })
+    Users.find({ email })
       .then((users) => {
         if (users[0] != null) {
           req.user = users[0];

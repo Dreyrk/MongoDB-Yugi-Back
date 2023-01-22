@@ -1,7 +1,8 @@
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
+import { config } from "dotenv";
 
-const { JWT_SECRET } = process.env;
+config();
 
 const hashingOptions = {
   type: argon2.argon2id,
@@ -12,12 +13,15 @@ const hashingOptions = {
 
 const auth = {
   hashPassword: (req, res, next) => {
+    const user = req.body;
+
     argon2
-      .hash(req.body.password, hashingOptions)
+      .hash(user.password, hashingOptions)
       .then((hashedPassword) => {
-        const user = req.user;
+        console.log(user.password);
         delete user.password;
         user.hashedPassword = hashedPassword;
+        console.log(user.hashedPassword);
 
         next();
       })
@@ -27,11 +31,15 @@ const auth = {
       });
   },
   verifyPassword: (req, res) => {
+    console.log(req.user);
+
     argon2
       .verify(req.user.hashedPassword, req.body.password, hashingOptions)
       .then((isVerified) => {
+        const _id = req.user._id.toString();
+        console.log(_id.toString());
         if (isVerified) {
-          const token = jwt.sign({ sub: req.user.id }, JWT_SECRET, {
+          const token = jwt.sign({ sub: _id }, process.env.JWT_SECRET, {
             algorithm: "HS512",
           });
           delete req.user.hashedPassword;

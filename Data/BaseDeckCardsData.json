@@ -1,0 +1,242 @@
+{
+  "data": [
+    {
+      "Name": "Dragon Ultime Aux Yeux Bleus",
+      "Stars": 12,
+      "Effect": "FUSION: Dragon Blanc Aux Yeux Bleus + Dragon Blanc Aux Yeux Bleus + Dragon Blanc Aux Yeux Bleus",
+      "ATK": 4500,
+      "DEF": 3800,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Dragon Blanc Aux Yeux Bleus",
+      "Stars": 8,
+      "Effect": "No Effect",
+      "ATK": 3000,
+      "DEF": 2500,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Dragon Blanc Aux Yeux Bleus",
+      "Stars": 8,
+      "Effect": "No Effect",
+      "ATK": 3000,
+      "DEF": 2500,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Dragon Blanc Aux Yeux Bleus",
+      "Stars": 8,
+      "Effect": "No Effect",
+      "ATK": 3000,
+      "DEF": 2500,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Dragon Etincelant",
+      "Stars": 4,
+      "Effect": "No Effect",
+      "ATK": 1900,
+      "DEF": 1600,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Demoiselle aux yeux couleur bleu",
+      "Stars": 1,
+      "Effect": "ON TARGET: Summon a Blue Eyes White Dragon",
+      "ATK": 0,
+      "DEF": 0,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Invoquateur Dragon Bleu",
+      "Stars": 4,
+      "Effect": "ON DEAD: take a monster of your deck and place it in your hand",
+      "ATK": 1500,
+      "DEF": 600,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Ecrasement Destructeur",
+      "Stars": null,
+      "Effect": "MAGIC: If you have a Dragon type monster, destroy a Spell/Trap card and inflict -500LP ",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Magic"
+    },
+    {
+      "Name": "Cadeau de l'éléphant blanc",
+      "Stars": null,
+      "Effect": "Sacrifice a monster and draw 2 cards",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Magic"
+    },
+    {
+      "Name": "Interruption de Raigeki",
+      "Stars": null,
+      "Effect": "Sacrifice a monster and destroy a card(any)",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Trap"
+    },
+    {
+      "Name": "Bouclier Drainant",
+      "Stars": null,
+      "Effect": "ON TARGET: heal damage instead of take damage",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Trap"
+    },
+    {
+      "Name": "Dragon Inférieur",
+      "Stars": 4,
+      "Effect": "No Effect",
+      "ATK": 1200,
+      "DEF": 1000,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Dragon Alexandrite",
+      "Stars": 4,
+      "Effect": "No Effect",
+      "ATK": 2000,
+      "DEF": 100,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Dragon Alexandrite",
+      "Stars": 4,
+      "Effect": "No Effect",
+      "ATK": 2000,
+      "DEF": 100,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Vigilance de champion",
+      "Stars": null,
+      "Effect": "ON ENEMY SUMMON OR ACTIVATE: Cancel enemy monster summon or trap/spell activation",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Trap"
+    },
+    {
+      "Name": "Tactique Dragonienne",
+      "Stars": null,
+      "Effect": "Sacrifice 2 monsters and summon a Dragon type monster from your deck",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Magic"
+    },
+    {
+      "Name": "Ecrasement Destructeur",
+      "Stars": null,
+      "Effect": "IF YOU HAVE DRAGON TYPE MONSTER: destroy a Spell/Trap card and inflict -500LP ",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Magic"
+    },
+    {
+      "Name": "Controlleur d'Ennemi",
+      "Stars": null,
+      "Effect": "Take control of an enemy monster for one turn",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Magic"
+    },
+    {
+      "Name": "Cartes de l'Harmonie",
+      "Stars": null,
+      "Effect": "Sacrifice a monster with max 1000 ATK and draw 2 cards",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Magic"
+    },
+    {
+      "Name": "Poupée de sacrifice",
+      "Stars": null,
+      "Effect": "Sacrifice a monster and summon a level 8 monster from your hand. He can't attack this turn",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Magic"
+    },
+    {
+      "Name": "Flot Ruigissant de Destruction",
+      "Stars": null,
+      "Effect": "IF YOU CONTROL Blue eyes white dragon: Destroy all enemy cards. Blues eyes White Dragon can't attack this turn",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Magic"
+    },
+    {
+      "Name": "Force Supérieure",
+      "Stars": null,
+      "Effect": "Sacrifice a monster and summon a level 7 or more monster",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Magic"
+    },
+    {
+      "Name": "Pierre Blanche Légendaire",
+      "Stars": 1,
+      "Effect": "ON DEAD: Add Blue eyes White Dragon from your deck to your hand",
+      "ATK": 300,
+      "DEF": 250
+    },
+    {
+      "Name": "Dragon Ailé, Gardien de la Forteress N°1",
+      "Stars": 4,
+      "Effect": "No Effect",
+      "ATK": 1400,
+      "DEF": 1200,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Malédiction du Dragon",
+      "Stars": 5,
+      "Effect": "No Effect",
+      "ATK": 2000,
+      "DEF": 1500,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Le Battement d'ailes du Dragon Géant",
+      "Stars": null,
+      "Effect": "Return a monster level 5 or more and destroy all spell/trap cards",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Magic"
+    },
+    {
+      "Name": "Hurlement d'argent",
+      "Stars": null,
+      "Effect": "Summon a Dragon type monster from your Graveyard",
+      "ATK": null,
+      "DEF": null,
+      "Category": "Magic"
+    },
+    {
+      "Name": "Dragon Mirage",
+      "Stars": 4,
+      "Effect": "As long this card is alive your enemy can't active spell/trap cards",
+      "ATK": 1600,
+      "DEF": 600,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Dragon Magma",
+      "Stars": 2,
+      "Effect": "EACH TIME THIS CARD INFLICT DAMAGE: +200 ATK",
+      "ATK": 1400,
+      "DEF": 600,
+      "Category": "Monster"
+    },
+    {
+      "Name": "Recharge",
+      "Stars": null,
+      "Effect": "Sacrifice your Hand cards and Take another Hand",
+      "ATK": null,
+      "DEF": null
+    }
+  ]
+}

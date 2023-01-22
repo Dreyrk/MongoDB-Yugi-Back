@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema(
   {
     pseudo: String,
     email: { type: String, required: true },
-    password: { type: String, required: true },
+    hashedPassword: { type: String, required: true },
     avatar_url: String,
     favs: [CardSchema],
     decks: [DeckSchema],
