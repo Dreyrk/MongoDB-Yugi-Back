@@ -59,7 +59,7 @@ router.post("/api/cards", postCard);
 router.get("/api/decks", getDecks);
 router.get("/api/decks/:id", getDeckById);
 
-router.get("/api/decks/base", verifyToken, getBaseDecks);
+router.get("/api/decks/base", getBaseDecks);
 router.get("/api/decks/base/:id", verifyToken, getBaseDeckById);
 
 //POST
