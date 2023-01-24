@@ -73,7 +73,7 @@ router.put("/api/decks/:id", updateDeck);
 
 //DELETE
 
-router.delete("/api/decks/reset", verifyToken, resetAllDeck);
+router.delete("/api/decks/reset", resetAllDeck);
 
 /*<<<-------------------------------------------Users------------------------------------------------>>>*/
 

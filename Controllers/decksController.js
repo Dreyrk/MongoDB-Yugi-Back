@@ -24,7 +24,7 @@ const deckController = {
     try {
       const { name, description, difficulty, img } = req.body;
 
-      const newDeck = Decks.create({
+      const newDeck = await Decks.create({
         name,
         difficulty,
         description,
@@ -33,7 +33,7 @@ const deckController = {
 
       console.log(newDeck);
 
-      res.sendStatus(201);
+      res.status(201).send({ deck: newDeck._id });
     } catch (e) {
       console.error(e);
       res.status(500).send(error.dbPostError);
