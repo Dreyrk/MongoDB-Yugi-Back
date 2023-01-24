@@ -46,7 +46,7 @@ router.get("/", (req, res, next) => {
 router.get("/api/cards", getCards);
 router.get("/api/cards/all", getAllCards);
 router.get("/api/cards/:id", getCardById);
-router.get("/api/cards/search/", searchCards);
+router.get("/api/cards/search", searchCards);
 
 //POST
 

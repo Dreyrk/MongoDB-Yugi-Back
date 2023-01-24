@@ -32,26 +32,53 @@ const CardsController = {
     });
   },
   getAllCards: async (req, res) => {
-    try {
+    const { page, limit, order = "asc" } = req.query;
+
+    if (page && limit) {
+      const pageNumber = Number.parseInt(page);
+      const limitNumber = Number.parseInt(limit);
+
+      let pages = 0;
+
+      if (pageNumber > 0 && !Number.isNaN(pageNumber)) {
+        pages = pageNumber;
+      }
+
+      let size = 12;
+
+      if (limitNumber > 0 && !Number.isNaN(limitNumber)) {
+        size = limitNumber;
+      }
+      const allCards = await Cards.find({});
+      const cards = await Cards.find()
+        .limit(size)
+        .skip(size * pages)
+        .sort({
+          Name: order,
+        });
+      res.status(200).send({
+        results: cards,
+        totalPages: Math.ceil(allCards.length / size),
+      });
+    } else {
       const AllCards = await Cards.find({});
-      res.status(200).send(AllCards);
-    } catch (err) {
-      res.status(500).send(error.dbGetError);
+
+      res.status(200).send({ results: AllCards, totalCards: AllCards.length });
     }
   },
   searchCards: async (req, res) => {
     const { name = "", rarity = "" } = req.query;
 
-    try {
-      const users = await Cards.find({ name, rarity });
+    const cards = await Cards.find();
 
-      if (users) {
-        res.status(200).send(users);
-      } else {
-        res.sendStatus(404);
-      }
-    } catch (err) {
-      res.status(500).send(error.dbGetError);
+    const cardsSearched = cards.filter((card) =>
+      card.Name.toLowerCase().includes(name)
+    );
+
+    if (cardsSearched) {
+      res.status(200).send(cardsSearched);
+    } else {
+      res.sendStatus(404);
     }
   },
   getCardById: async (req, res) => {
