@@ -8,6 +8,7 @@
     "start": "nodemon index.js",
     "seed": "node ./Seed/cardSeed.js",
     "seed2": "node ./Seed/baseDeckCardsSeed.js",
+    "APIseed": "node ./Seed/yugiCardSeed.js",
     "resetUser": "node ./Seed/usersSeed.js"
   },
   "author": "",
@@ -19,6 +20,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.1",
+    "node-fetch": "^3.3.0",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20"
   }

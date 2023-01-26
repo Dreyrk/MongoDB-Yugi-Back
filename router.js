@@ -1,13 +1,13 @@
 import express from "express";
 import usersController from "./Controllers/usersController.js";
-import cardsController from "./Controllers/cardsController.js";
+import YugiCardsController from "./Controllers/YugiCardsController.js";
 import deckController from "./Controllers/decksController.js";
 import baseDeckController from "./Controllers/baseDecksController.js";
 import loginController from "./Auth/login.js";
 import auth from "./Auth/auth.js";
 
 const { getCards, getAllCards, getCardById, searchCards, postCard } =
-  cardsController;
+  YugiCardsController;
 
 const {
   getAllUsers,
@@ -46,7 +46,7 @@ router.get("/", (req, res, next) => {
 router.get("/api/cards", getCards);
 router.get("/api/cards/all", getAllCards);
 router.get("/api/cards/:id", getCardById);
-router.get("/api/cards/search", searchCards);
+router.get("/api/search/", searchCards);
 
 //POST
 
