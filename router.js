@@ -6,8 +6,14 @@ import baseDeckController from "./Controllers/baseDecksController.js";
 import loginController from "./Auth/login.js";
 import auth from "./Auth/auth.js";
 
-const { getCards, getAllCards, getCardById, searchCards, postCard } =
-  YugiCardsController;
+const {
+  getCards,
+  getAllCards,
+  getCardById,
+  searchCards,
+  postCard,
+  getCardImg,
+} = YugiCardsController;
 
 const {
   getAllUsers,
@@ -47,6 +53,7 @@ router.get("/api/cards", getCards);
 router.get("/api/cards/all", getAllCards);
 router.get("/api/cards/:id", getCardById);
 router.get("/api/search/", searchCards);
+router.get("/api/images/cards", getCardImg);
 
 //POST
 
