@@ -1,7 +1,7 @@
 import Users from "../Models/UserModel.js";
 import error from "../error.js";
 import Decks from "../Models/DeckModel.js";
-import Cards from "../Models/CardModel.js";
+import YugiCards from "../Models/YugiAPICardModel.js";
 
 const usersController = {
   getAllUsers: async (req, res) => {
@@ -92,23 +92,73 @@ const usersController = {
       res.status(500).send(error.user);
     }
   },
-  insertCardFav: async (req, res) => {
+  getFavs: async (req, res) => {
+    const { user_id } = req.params;
+
     try {
-      const { user_id, card_id } = req.body;
+      const userFavs = await Users.findById(user_id).select("favs");
 
-      const cards = await Cards.find({
-        _id: { $in: card_id },
-      });
-
-      const newUserWithFavs = await Users.updateOne(
-        { _id: user_id },
-        { favs: cards }
-      );
-
-      res.status(201).send({ data: newUserWithFavs });
+      res.status(200).send({ results: userFavs, totalFavs: userFavs.length });
     } catch (e) {
       console.error(e);
-      res.status(500).send(error.user);
+      res.sendStatus(500);
+    }
+  },
+  resetFavs: async (req, res) => {
+    const { user_id } = req.params;
+
+    try {
+      const user = await Users.findByIdAndUpdate(user_id, {
+        favs: [],
+      });
+      console.log(user);
+
+      res.sendStatus(204);
+    } catch (e) {
+      console.error(e);
+      res.sendStatus(500);
+    }
+  },
+  insertCardFav: async (req, res) => {
+    const { user_id, card_id } = req.body;
+
+    try {
+      const user = await Users.findById(user_id);
+
+      const favCard = await YugiCards.findById(card_id).select([
+        "name",
+        "type",
+        "atk",
+        "def",
+        "card_images.image_url",
+        "desc",
+      ]);
+
+      console.log(favCard);
+
+      user.favs.push(favCard);
+
+      user.save();
+
+      res.status(201).send(user);
+    } catch (e) {
+      console.error(e);
+      res.sendStatus(500);
+    }
+  },
+  removeFavs: async (req, res) => {
+    const { user_id, card_id } = req.body;
+    try {
+      await Users.findByIdAndUpdate(user_id, {
+        $pullAll: { favs: [{ _id: card_id }] },
+      });
+
+      const user = await Users.findById(user_id).select("favs");
+
+      res.status(204).send({ message: "Removed", data: user });
+    } catch (e) {
+      console.error(e);
+      res.sendStatus(500);
     }
   },
   deleteUser: async (req, res) => {

@@ -151,9 +151,9 @@ const YugiCardsController = {
 
     try {
       const newCard = new YugiCards({
-        Name: name,
-        Rarity: rarity,
-        Description: description,
+        name: name,
+        rarity: rarity,
+        description: description,
       });
       const savedCard = await newCard.save();
       res.status(201).send({ data: savedCard });

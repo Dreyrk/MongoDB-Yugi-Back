@@ -1,6 +1,6 @@
 import Decks from "../Models/DeckModel.js";
-import Cards from "../Models/CardModel.js";
 import error from "../error.js";
+import YugiCards from "../Models/YugiAPICardModel.js";
 
 const deckController = {
   getDecks: async (req, res) => {
@@ -43,9 +43,16 @@ const deckController = {
     try {
       const { cards_id, deck_id } = req.body;
 
-      const cards = await Cards.find({
+      const cards = await YugiCards.find({
         _id: { $in: cards_id },
-      });
+      }).select([
+        "name",
+        "type",
+        "desc",
+        "atk",
+        "def",
+        "card_images.image_url",
+      ]);
       console.log(cards);
 
       console.log(cards_id);

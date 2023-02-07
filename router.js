@@ -21,7 +21,10 @@ const {
   deleteUser,
   searchUser,
   insertDeckUser,
+  getFavs,
   insertCardFav,
+  removeFavs,
+  resetFavs,
   resetUsers,
 } = usersController;
 
@@ -97,7 +100,10 @@ router.delete("/api/users/reset", resetUsers);
 //POST
 
 router.post("/api/users/insert/decks", verifyToken, insertDeckUser);
-router.post("/api/users/insert/cards", verifyToken, insertCardFav);
+router.get("/api/favs/:user_id", getFavs);
+router.post("/api/users/insert/favs", insertCardFav);
+router.put("/api/users/remove/favs", removeFavs);
+router.put("/api/users/reset/favs/:user_id", resetFavs);
 
 /*<<<-------------------------------------------Login------------------------------------------------>>>*/
 

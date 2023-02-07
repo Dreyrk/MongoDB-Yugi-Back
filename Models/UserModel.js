@@ -1,6 +1,19 @@
 import mongoose from "mongoose";
 import { DeckSchema } from "./DeckModel.js";
-import { CardSchema } from "./CardModel.js";
+
+const CardSchema = mongoose.Schema({
+  name: String,
+  type: String,
+  desc: String,
+  archetype: String,
+  atk: { type: String, default: "0" },
+  def: { type: String, default: "0" },
+  card_images: [
+    {
+      image_url: String,
+    },
+  ],
+});
 
 const UserSchema = new mongoose.Schema(
   {

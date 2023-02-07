@@ -1,5 +1,22 @@
 import mongoose from "mongoose";
-import { CardSchema } from "./CardModel.js";
+
+const DeckCardSchema = {
+  name: String,
+  type: String,
+  frameType: String,
+  desc: String,
+  race: String,
+  archetype: String,
+  atk: { type: String, default: "0" },
+  def: { type: String, default: "0" },
+  card_images: [
+    {
+      image_url: String,
+      image_url_small: String,
+      image_url_cropped: String,
+    },
+  ],
+};
 
 export const DeckSchema = new mongoose.Schema(
   {
@@ -7,7 +24,7 @@ export const DeckSchema = new mongoose.Schema(
     difficulty: String,
     description: String,
     img: String,
-    cards: [CardSchema],
+    cards: [DeckCardSchema],
   },
   { timestamps: true }
 );
